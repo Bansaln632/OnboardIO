@@ -1,0 +1,45 @@
+name: Clone Private Repo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  clone:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Clone private repo
+      env:
+        CLONE_TOKEN: ${{ secrets.CLONE_TOKEN }}
+      run: |
+        git clone https://Bansaln632:${CLONE_TOKEN}@github.com/Bansaln632/employeeOnBoarding.git temp_repo
+        
+    - name: Remove git history
+      run: |
+        cd temp_repo
+        rm -rf .git
+        cp -r . ../
+        cd ..
+        rm -rf temp_repo
+        
+    - name: Configure git
+      run: |
+        git config --global user.email "github-actions[bot]@github.com"
+        git config --global user.name "github-actions[bot]"
+        
+    - name: Commit and push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git add -A
+        git commit -m "Sync: Clone from employeeOnBoarding without history" || true
+        git push origin main --force
