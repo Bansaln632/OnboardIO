@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* Custom theme configuration */
+@theme {
+  --color-primary-50: #f5f7ff;
+  --color-primary-100: #ebefff;
+  --color-primary-200: #d6deff;
+  --color-primary-300: #b3c2ff;
+  --color-primary-400: #8099ff;
+  --color-primary-500: #667eea;
+  --color-primary-600: #5568d3;
+  --color-primary-700: #4453b8;
+  --color-primary-800: #3a4694;
+  --color-primary-900: #2d3675;
+
+  --color-success: #28a745;
+  --color-success-light: #d4edda;
+  --color-success-dark: #1e7e34;
+
+  --color-error: #dc3545;
+  --color-error-light: #f8d7da;
+  --color-error-dark: #a71d2a;
+
+  --color-warning: #ffc107;
+  --color-warning-light: #fff3cd;
+  --color-warning-dark: #d39e00;
+
+  --color-info: #17a2b8;
+  --color-info-light: #d1ecf1;
+  --color-info-dark: #117a8b;
+}
+
+/* Custom Components */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-colors duration-200 border-none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.btn-primary {
+  background-color: #667eea !important;
+  color: white !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #5568d3 !important;
+}
+
+.btn-success {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #1e7e34 !important;
+}
+
+.btn-error {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-error:hover:not(:disabled) {
+  background-color: #a71d2a !important;
+}
+
+.btn-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background-color: #d39e00 !important;
+}
+
+.btn-secondary {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #545b62 !important;
+}
+
+.card {
+  @apply bg-white rounded-lg p-6 transition-shadow duration-200;
+}
+
+.card-hover {
+  @apply hover:shadow-lg;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md;
+}
+
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-success {
+  @apply bg-success-light text-success-dark;
+}
+
+.badge-error {
+  @apply bg-error-light text-error-dark;
+}
+
+.badge-warning {
+  @apply bg-warning-light text-warning-dark;
+}
+
+.spinner {
+  @apply inline-block w-8 h-8 border-4 border-gray-200 border-t-primary-500 rounded-full animate-spin;
+}
+
+/* Custom shadow utilities */
+.shadow-soft {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-strong {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
