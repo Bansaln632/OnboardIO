@@ -11,7 +11,10 @@ import "./styles/app.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(
+// Only use StrictMode in development to avoid double rendering in production
+const isDevelopment = import.meta.env.DEV;
+
+const AppWrapper = isDevelopment ? (
   <React.StrictMode>
     <ToastProvider>
       <BrowserRouter>
@@ -19,4 +22,14 @@ root.render(
       </BrowserRouter>
     </ToastProvider>
   </React.StrictMode>
+) : (
+  <ToastProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ToastProvider>
 );
+
+root.render(AppWrapper);
+
+

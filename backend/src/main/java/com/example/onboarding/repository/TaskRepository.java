@@ -1,9 +1,9 @@
 package com.example.onboarding.repository;
 
 import com.example.onboarding.entity.Task;
+import com.example.onboarding.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import com.example.onboarding.entity.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { useTasks } from '../../hooks';
 import { userService } from '../../services';
 import { SUCCESS_MESSAGES } from '../../constants';
@@ -25,7 +25,7 @@ function TasksSection({ isAdmin }) {
     }
   };
 
-  const handleAssignTask = async () => {
+  const handleAssignTask = useCallback(async () => {
     if (!taskTitle.trim() || !assignUserId) {
       return;
     }
@@ -33,7 +33,20 @@ function TasksSection({ isAdmin }) {
     setTaskTitle('');
     setAssignUserId('');
     setShowForm(false);
-  };
+  }, [taskTitle, assignUserId, assignTask]);
+
+  // Memoize task list to prevent unnecessary re-renders
+  const taskList = useMemo(() => {
+    return tasks.map(task => (
+      <TaskCard
+        key={task.id}
+        task={task}
+        isAdmin={isAdmin}
+        onComplete={completeTask}
+        onDelete={deleteTask}
+      />
+    ));
+  }, [tasks, isAdmin, completeTask, deleteTask]);
 
   if (loading) {
     return (
@@ -100,22 +113,15 @@ function TasksSection({ isAdmin }) {
             </p>
           </div>
         ) : (
-          tasks.map(task => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              isAdmin={isAdmin}
-              onComplete={completeTask}
-              onDelete={deleteTask}
-            />
-          ))
+          taskList
         )}
       </div>
     </div>
   );
 }
 
-function TaskCard({ task, isAdmin, onComplete, onDelete }) {
+// Memoized TaskCard component to prevent unnecessary re-renders
+const TaskCard = memo(({ task, isAdmin, onComplete, onDelete }) => {
   return (
     <div className="card card-hover">
       <div className="flex items-start justify-between">
@@ -157,7 +163,9 @@ function TaskCard({ task, isAdmin, onComplete, onDelete }) {
       </div>
     </div>
   );
-}
+});
+
+TaskCard.displayName = 'TaskCard';
 
 export default TasksSection;
 

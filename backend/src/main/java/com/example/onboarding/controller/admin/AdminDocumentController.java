@@ -3,12 +3,14 @@ package com.example.onboarding.controller.admin;
 import com.example.onboarding.dto.DocumentDTO;
 import com.example.onboarding.dto.UserDocumentDTO;
 import com.example.onboarding.entity.Document;
+import com.example.onboarding.entity.Notification;
 import com.example.onboarding.entity.Profile;
 import com.example.onboarding.entity.User;
 import com.example.onboarding.entity.UserDocument;
 import com.example.onboarding.repository.DocumentRepository;
 import com.example.onboarding.repository.UserDocumentRepository;
 import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.service.NotificationService;
 import com.example.onboarding.util.OnboardingProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -33,6 +35,7 @@ public class AdminDocumentController {
     private final UserRepository userRepository;
     private final DocumentRepository documentRepository;
     private final OnboardingProgressService progressService;
+    private final NotificationService notificationService;
 
     // ==================== Document Type Management ====================
 
@@ -152,6 +155,16 @@ public class AdminDocumentController {
         // Recalculate onboarding progress for the employee
         progressService.recalculateForEmployee(saved.getUser().getId());
 
+        // Notify user about approval
+        String message = "Your document '" + saved.getDocument().getName() + "' has been approved";
+        notificationService.createNotification(
+            saved.getUser(),
+            message,
+            Notification.NotificationType.DOCUMENT_APPROVED,
+            "DOCUMENT",
+            userDocumentId
+        );
+
         return UserDocumentDTO.fromUserDocument(saved);
     }
 
@@ -174,6 +187,16 @@ public class AdminDocumentController {
 
         // Recalculate onboarding progress for the employee
         progressService.recalculateForEmployee(saved.getUser().getId());
+
+        // Notify user about rejection
+        String message = "Your document '" + saved.getDocument().getName() + "' has been rejected. Reason: " + reason;
+        notificationService.createNotification(
+            saved.getUser(),
+            message,
+            Notification.NotificationType.DOCUMENT_REJECTED,
+            "DOCUMENT",
+            userDocumentId
+        );
 
         return UserDocumentDTO.fromUserDocument(saved);
     }

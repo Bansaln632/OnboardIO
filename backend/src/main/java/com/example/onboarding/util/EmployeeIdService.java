@@ -1,9 +1,8 @@
 package com.example.onboarding.util;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class EmployeeIdService {

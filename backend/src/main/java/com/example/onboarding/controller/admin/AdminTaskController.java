@@ -2,10 +2,12 @@ package com.example.onboarding.controller.admin;
 
 import com.example.onboarding.dto.DtoMapper;
 import com.example.onboarding.dto.TaskDTO;
+import com.example.onboarding.entity.Notification;
 import com.example.onboarding.entity.Task;
-import com.example.onboarding.repository.TaskRepository;
 import com.example.onboarding.entity.User;
+import com.example.onboarding.repository.TaskRepository;
 import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.service.NotificationService;
 import com.example.onboarding.util.OnboardingProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ public class AdminTaskController {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final OnboardingProgressService progressService;
+    private final NotificationService notificationService;
 
     @PostMapping("/assign")
     public void assignTask(
@@ -35,10 +38,20 @@ public class AdminTaskController {
         task.setCompleted(false);
         task.setEmployee(user);
 
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
 
         // Recalculate onboarding progress for the employee
         progressService.recalculateForEmployee(user.getId());
+
+        // Notify user about new task assignment
+        String message = "New task assigned: " + title;
+        notificationService.createNotification(
+            user,
+            message,
+            Notification.NotificationType.TASK_ASSIGNED,
+            "TASK",
+            savedTask.getId()
+        );
     }
 
     @GetMapping

@@ -1,12 +1,6 @@
 package com.example.onboarding.security;
 
-import com.example.onboarding.entity.Document;
-import com.example.onboarding.entity.Onboarding;
-import com.example.onboarding.entity.OnboardingStatus;
-import com.example.onboarding.entity.Profile;
-import com.example.onboarding.entity.Role;
-import com.example.onboarding.entity.User;
-import com.example.onboarding.entity.UserDocument;
+import com.example.onboarding.entity.*;
 import com.example.onboarding.repository.DocumentRepository;
 import com.example.onboarding.repository.OnboardingRepository;
 import com.example.onboarding.repository.UserDocumentRepository;

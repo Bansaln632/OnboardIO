@@ -67,11 +67,25 @@
 
 ### Authentication & Security
 
-- 🔐 **JWT Authentication**: Secure token-based authentication
-- 🌐 **Google Sign-In**: OAuth2 integration for easy login
+- 🔐 **JWT Authentication**: Secure token-based authentication (always enabled)
+- 🌐 **Google Sign-In**: Optional OAuth2 integration (configurable)
 - 🔒 **Role-Based Access**: Admin (HR) and User (Employee) roles
 - 🛡️ **Password Encryption**: BCrypt password hashing
 - 🚫 **Protected Routes**: Frontend and backend route protection
+
+#### OAuth2 Configuration
+
+Google Sign-In is **OPTIONAL** and disabled by default. The application uses JWT-based authentication.
+
+**To enable Google Sign-In:**
+1. Open `backend/src/main/resources/application.properties`
+2. Uncomment the OAuth2 configuration lines
+3. Get Google OAuth2 credentials from [Google Cloud Console](https://console.cloud.google.com/)
+4. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` environment variables
+5. Restart the backend
+
+When OAuth2 is disabled (default), users can only sign up and login with email/password.
+When OAuth2 is enabled, users can use both email/password AND Google Sign-In.
 
 ---
 

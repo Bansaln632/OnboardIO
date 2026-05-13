@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { useTrainings } from '../../hooks';
 import { userService } from '../../services';
 import { ensureUrlProtocol } from '../../utils/helpers';
@@ -26,7 +26,7 @@ function TrainingsSection({ isAdmin }) {
     }
   };
 
-  const handleAssignTraining = async () => {
+  const handleAssignTraining = useCallback(async () => {
     if (!trainingName.trim() || !trainingContent.trim() || !trainingAssignUserId) {
       return;
     }
@@ -35,15 +35,28 @@ function TrainingsSection({ isAdmin }) {
     setTrainingContent('');
     setTrainingAssignUserId('');
     setShowForm(false);
-  };
+  }, [trainingName, trainingContent, trainingAssignUserId, assignTraining]);
 
-  const handleStartTraining = async (training) => {
+  const handleStartTraining = useCallback(async (training) => {
     if (training.content) {
       const url = ensureUrlProtocol(training.content);
       window.open(url, '_blank');
       await startTraining(training.id);
     }
-  };
+  }, [startTraining]);
+
+  // Memoize training list
+  const trainingList = useMemo(() => {
+    return trainings.map(training => (
+      <TrainingCard
+        key={training.id}
+        training={training}
+        isAdmin={isAdmin}
+        onStart={handleStartTraining}
+        onDelete={deleteTraining}
+      />
+    ));
+  }, [trainings, isAdmin, handleStartTraining, deleteTraining]);
 
   if (loading) {
     return (
@@ -117,22 +130,15 @@ function TrainingsSection({ isAdmin }) {
             </p>
           </div>
         ) : (
-          trainings.map(training => (
-            <TrainingCard
-              key={training.id}
-              training={training}
-              isAdmin={isAdmin}
-              onStart={handleStartTraining}
-              onDelete={deleteTraining}
-            />
-          ))
+          trainingList
         )}
       </div>
     </div>
   );
 }
 
-function TrainingCard({ training, isAdmin, onStart, onDelete }) {
+// Memoized TrainingCard component
+const TrainingCard = memo(({ training, isAdmin, onStart, onDelete }) => {
   return (
     <div className="card card-hover">
       <div className="flex items-start justify-between">
@@ -187,6 +193,8 @@ function TrainingCard({ training, isAdmin, onStart, onDelete }) {
       </div>
     </div>
   );
-}
+});
+
+TrainingCard.displayName = 'TrainingCard';
 
 export default TrainingsSection;

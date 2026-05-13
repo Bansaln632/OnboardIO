@@ -1,11 +1,10 @@
 package com.example.onboarding.util;
 
-import com.example.onboarding.entity.Onboarding;
 import com.example.onboarding.entity.OnboardingStatus;
+import com.example.onboarding.repository.OnboardingRepository;
 import com.example.onboarding.repository.TaskRepository;
 import com.example.onboarding.repository.TrainingRepository;
 import com.example.onboarding.repository.UserDocumentRepository;
-import com.example.onboarding.repository.OnboardingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

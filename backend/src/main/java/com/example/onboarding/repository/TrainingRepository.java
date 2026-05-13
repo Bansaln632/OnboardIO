@@ -1,10 +1,11 @@
 package com.example.onboarding.repository;
 
 import com.example.onboarding.entity.Training;
+import com.example.onboarding.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
-import com.example.onboarding.entity.User;
 
 public interface TrainingRepository extends JpaRepository<Training, Long> {
     List<Training> findByEmployee(User user);

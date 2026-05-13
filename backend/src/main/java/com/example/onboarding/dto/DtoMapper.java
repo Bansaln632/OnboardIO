@@ -1,10 +1,6 @@
 package com.example.onboarding.dto;
 
-import com.example.onboarding.entity.Onboarding;
-import com.example.onboarding.entity.OnboardingAssignmentHistory;
-import com.example.onboarding.entity.Task;
-import com.example.onboarding.entity.Training;
-import com.example.onboarding.entity.User;
+import com.example.onboarding.entity.*;
 
 public class DtoMapper {
 

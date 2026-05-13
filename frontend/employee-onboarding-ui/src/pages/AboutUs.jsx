@@ -5,228 +5,165 @@ function AboutUs() {
   const isLoggedIn = !!localStorage.getItem("token");
 
   return (
-    <div style={styles.container}>
+    <div className="min-h-screen animate-fade-in">
       {/* Hero Section */}
-      <div style={styles.hero}>
-        <h1 style={styles.heroTitle}>🚀 Welcome to OnboardIO</h1>
-        <p style={styles.heroSubtitle}>Your Employee Onboarding Companion</p>
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-500 via-purple-600 to-pink-500"></div>
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full translate-y-1/2 -translate-x-1/2"></div>
+        </div>
+        <div className="relative px-4 py-20 sm:py-32 text-center text-white">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="w-24 h-24 bg-white bg-opacity-20 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-8 animate-bounce-soft">
+              <span className="text-6xl">🚀</span>
+            </div>
+            <h1 className="text-5xl sm:text-7xl font-extrabold mb-6">Welcome to OnboardIO</h1>
+            <p className="text-2xl sm:text-3xl opacity-95 font-medium">Your Employee Onboarding Companion</p>
+            <p className="text-lg opacity-85 max-w-2xl mx-auto">
+              Streamlining the journey from new hire to productive team member
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
-      <div style={styles.content}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
         {/* About Section */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>About OnboardIO</h2>
-          <p style={styles.text}>
-            OnboardIO is a modern employee onboarding platform designed to streamline the process
-            of welcoming new team members. We provide a seamless experience for both employees
-            and administrators to manage tasks, trainings, and document uploads.
-          </p>
+        <section className="animate-slide-in-right">
+          <div className="card bg-gradient-to-br from-white to-blue-50 border-2 border-blue-100">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-3xl">ℹ️</span>
+              </div>
+              <h2 className="text-4xl font-bold text-gray-800">About OnboardIO</h2>
+            </div>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              OnboardIO is a <strong className="text-primary-600">modern employee onboarding platform</strong> designed to streamline the process
+              of welcoming new team members. We provide a seamless experience for both employees
+              and administrators to manage tasks, trainings, and document uploads with ease and efficiency.
+            </p>
+          </div>
         </section>
 
         {/* Features Section */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Key Features</h2>
-          <div style={styles.featureGrid}>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>📋</div>
-              <h3>Task Management</h3>
-              <p>Stay organized with assigned tasks and track completion progress.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>🎓</div>
-              <h3>Training Programs</h3>
-              <p>Access essential training materials and courses tailored for onboarding.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>📄</div>
-              <h3>Document Management</h3>
-              <p>Upload and manage required documents with approval workflows.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>📊</div>
-              <h3>Progress Tracking</h3>
-              <p>Monitor your onboarding progress with real-time updates.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>👥</div>
-              <h3>HR Management</h3>
-              <p>Admins can manage multiple employees and their onboarding journeys.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <div style={styles.featureIcon}>✅</div>
-              <h3>Approval System</h3>
-              <p>Streamlined document approval and rejection workflow.</p>
-            </div>
+        <section>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">✨ Key Features</h2>
+            <p className="text-xl text-gray-600">Everything you need for a smooth onboarding experience</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { icon: "📋", title: "Task Management", desc: "Stay organized with assigned tasks and track completion progress in real-time.", color: "from-blue-500 to-cyan-500" },
+              { icon: "🎓", title: "Training Programs", desc: "Access essential training materials and courses tailored for your onboarding journey.", color: "from-purple-500 to-pink-500" },
+              { icon: "📄", title: "Document Management", desc: "Upload and manage required documents with streamlined approval workflows.", color: "from-green-500 to-emerald-500" },
+              { icon: "📊", title: "Progress Tracking", desc: "Monitor your onboarding progress with intuitive dashboards and real-time updates.", color: "from-orange-500 to-red-500" },
+              { icon: "👥", title: "HR Management", desc: "Admins can efficiently manage multiple employees and their onboarding journeys.", color: "from-indigo-500 to-purple-500" },
+              { icon: "✅", title: "Approval System", desc: "Streamlined document approval and rejection workflow for faster processing.", color: "from-pink-500 to-rose-500" }
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="card card-hover bg-white group animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={`w-20 h-20 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                  <span className="text-4xl">{feature.icon}</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* How It Works */}
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>How It Works</h2>
-          <div style={styles.stepsGrid}>
-            <div style={styles.step}>
-              <div style={styles.stepNumber}>1</div>
-              <h3>Sign Up</h3>
-              <p>Create your account as an employee or HR administrator.</p>
-            </div>
-            <div style={styles.step}>
-              <div style={styles.stepNumber}>2</div>
-              <h3>Dashboard</h3>
-              <p>Access your personalized dashboard with onboarding information.</p>
-            </div>
-            <div style={styles.step}>
-              <div style={styles.stepNumber}>3</div>
-              <h3>Complete Activities</h3>
-              <p>Finish assigned tasks, trainings, and upload required documents.</p>
-            </div>
-            <div style={styles.step}>
-              <div style={styles.stepNumber}>4</div>
-              <h3>Get Approved</h3>
-              <p>Receive approval from admin and complete your onboarding.</p>
-            </div>
+        <section>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">🎯 How It Works</h2>
+            <p className="text-xl text-gray-600">Four simple steps to complete onboarding</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { num: "1", title: "Sign Up", desc: "Create your account as an employee or HR administrator.", color: "from-blue-500 to-cyan-500" },
+              { num: "2", title: "Dashboard", desc: "Access your personalized dashboard with onboarding information.", color: "from-purple-500 to-pink-500" },
+              { num: "3", title: "Complete Activities", desc: "Finish assigned tasks, trainings, and upload required documents.", color: "from-green-500 to-emerald-500" },
+              { num: "4", title: "Get Approved", desc: "Receive approval from admin and complete your onboarding journey.", color: "from-orange-500 to-red-500" }
+            ].map((step, index) => (
+              <div
+                key={index}
+                className="card bg-white text-center group hover:shadow-xl animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={`w-20 h-20 bg-gradient-to-br ${step.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg transform group-hover:scale-110 transition-all duration-300`}>
+                  <span className="text-4xl font-bold text-white">{step.num}</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* Call to Action */}
-        <section style={styles.ctaSection}>
- {!isLoggedIn && (<>
-              <h2>Ready to Get Started?</h2>
-              <p>Join Companio today and streamline your onboarding experience.</p>
+        <section>
+          <div className="relative overflow-hidden rounded-3xl shadow-strong">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500 via-purple-600 to-pink-500"></div>
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-white rounded-full"></div>
+              <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white rounded-full"></div>
+            </div>
+            <div className="relative px-8 py-20 text-center text-white">
+              {!isLoggedIn ? (
+                <div className="space-y-6">
+                  <div className="w-20 h-20 bg-white bg-opacity-20 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto">
+                    <span className="text-4xl">🎉</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold">Ready to Get Started?</h2>
+                  <p className="text-xl opacity-95 max-w-2xl mx-auto">
+                    Join OnboardIO today and streamline your employee onboarding experience.
+                  </p>
+                  <button
+                    onClick={() => navigate("/?tab=signup")}
+                    className="btn btn-outline !bg-white !text-primary-600 text-lg px-8 py-4 hover:!bg-white hover:!bg-opacity-90"
+                  >
+                    <span className="text-xl mr-2">✨</span>
+                    Sign Up Now
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  <div className="w-20 h-20 bg-white bg-opacity-20 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto">
+                    <span className="text-4xl">⚡</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold">Complete Your Activities Now</h2>
+                  <p className="text-xl opacity-95 max-w-2xl mx-auto">
+                    Welcome! Click below to check your assigned activities and continue your onboarding journey. 😊
+                  </p>
+                  <button
+                    onClick={() => navigate("/activities")}
+                    className="btn btn-outline !bg-white !text-primary-600 text-lg px-8 py-4 hover:!bg-white hover:!bg-opacity-90"
+                  >
+                    <span className="text-xl mr-2">⚡</span>
+                    Go to Activities
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
 
-            <button
-              onClick={() => navigate("/?tab=signup")}
-              className="btn btn-primary mt-6"
-            >
-              Sign Up Now
-            </button>
-            </>
-          )}
-          {isLoggedIn && (
-              <>
-              <h2>Complete Your Activities Now</h2>
-              <p>Welcome!! Please Click below to check your assigned activities.
-                  Have a wonderful Experience 😊</p>
-
-            <button
-              onClick={() => navigate("/activities")}
-              className="btn btn-primary mt-6"
-            >
-              Go to Activities ⚡
-            </button>
-            </>
-          )}
+        {/* Footer Info */}
+        <section className="text-center py-12 border-t-2 border-gray-200">
+          <p className="text-gray-600 text-lg">
+            Made with <span className="text-red-500 text-2xl">❤️</span> for seamless employee onboarding
+          </p>
         </section>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "calc(100vh - 80px)",
-    background: "#f8f9fa",
-  },
-  hero: {
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    color: "#fff",
-    padding: "60px 24px",
-    textAlign: "center",
-  },
-  heroTitle: {
-    fontSize: "48px",
-    fontWeight: "bold",
-    margin: "0 0 16px 0",
-  },
-  heroSubtitle: {
-    fontSize: "20px",
-    margin: 0,
-    opacity: 0.9,
-  },
-  content: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "60px 24px",
-  },
-  section: {
-    marginBottom: "60px",
-  },
-  sectionTitle: {
-    fontSize: "32px",
-    fontWeight: "bold",
-    marginBottom: "24px",
-    color: "#333",
-  },
-  text: {
-    fontSize: "16px",
-    lineHeight: "1.6",
-    color: "#666",
-  },
-  featureGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "24px",
-  },
-  featureCard: {
-    background: "#fff",
-    padding: "24px",
-    borderRadius: "12px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-    transition: "all 0.3s ease",
-    ":hover": {
-      transform: "translateY(-4px)",
-      boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-    }
-  },
-  featureIcon: {
-    fontSize: "48px",
-    marginBottom: "16px",
-  },
-  stepsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "24px",
-  },
-  step: {
-    background: "#fff",
-    padding: "24px",
-    borderRadius: "12px",
-    textAlign: "center",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-  },
-  stepNumber: {
-    width: "60px",
-    height: "60px",
-    borderRadius: "50%",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    color: "#fff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "24px",
-    fontWeight: "bold",
-    margin: "0 auto 16px",
-  },
-  ctaSection: {
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    color: "#fff",
-    padding: "60px 24px",
-    borderRadius: "12px",
-    textAlign: "center",
-  },
-  ctaButton: {
-    padding: "14px 32px",
-    background: "#ffd700",
-    color: "#764ba2",
-    border: "none",
-    borderRadius: "6px",
-    fontSize: "16px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    marginTop: "24px",
-    transition: "all 0.3s ease",
-  },
-};
 
 export default AboutUs;
 

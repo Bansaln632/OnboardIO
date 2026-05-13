@@ -1,15 +1,9 @@
 package com.example.onboarding.controller.user;
 
-import com.example.onboarding.entity.Document;
-import com.example.onboarding.entity.UserDocument;
-import com.example.onboarding.entity.Onboarding;
-import com.example.onboarding.entity.OnboardingStatus;
-import com.example.onboarding.entity.Profile;
-import com.example.onboarding.entity.Role;
-import com.example.onboarding.entity.User;
+import com.example.onboarding.entity.*;
 import com.example.onboarding.repository.DocumentRepository;
-import com.example.onboarding.repository.UserDocumentRepository;
 import com.example.onboarding.repository.OnboardingRepository;
+import com.example.onboarding.repository.UserDocumentRepository;
 import com.example.onboarding.repository.UserRepository;
 import com.example.onboarding.security.JwtUtil;
 import com.example.onboarding.util.EmployeeIdService;
@@ -18,7 +12,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

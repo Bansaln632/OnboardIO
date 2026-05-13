@@ -1,10 +1,10 @@
 package com.example.onboarding.entity;
 
-import com.example.onboarding.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity

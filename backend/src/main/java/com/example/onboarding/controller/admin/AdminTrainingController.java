@@ -2,10 +2,12 @@ package com.example.onboarding.controller.admin;
 
 import com.example.onboarding.dto.DtoMapper;
 import com.example.onboarding.dto.TrainingDTO;
+import com.example.onboarding.entity.Notification;
 import com.example.onboarding.entity.Training;
 import com.example.onboarding.entity.User;
 import com.example.onboarding.repository.TrainingRepository;
 import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.service.NotificationService;
 import com.example.onboarding.util.OnboardingProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ public class AdminTrainingController {
     private final TrainingRepository trainingRepository;
     private final UserRepository userRepository;
     private final OnboardingProgressService progressService;
+    private final NotificationService notificationService;
 
     @PostMapping("/assign")
     public void assignTraining(
@@ -37,10 +40,20 @@ public class AdminTrainingController {
         training.setEmployee(user);
         training.setContent(content);
 
-        trainingRepository.save(training);
+        Training savedTraining = trainingRepository.save(training);
 
         // Recalculate onboarding progress for the employee
         progressService.recalculateForEmployee(user.getId());
+
+        // Notify user about new training assignment
+        String message = "New training assigned: " + trainingName;
+        notificationService.createNotification(
+            user,
+            message,
+            Notification.NotificationType.TRAINING_ASSIGNED,
+            "TRAINING",
+            savedTraining.getId()
+        );
     }
 
     @GetMapping

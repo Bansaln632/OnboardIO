@@ -1,13 +1,15 @@
 package com.example.onboarding.controller.user;
 
 import com.example.onboarding.dto.UserDocumentDTO;
-import com.example.onboarding.service.impl.FileStorageService;
-import com.example.onboarding.entity.User;
-import com.example.onboarding.repository.UserRepository;
-import com.example.onboarding.repository.UserDocumentRepository;
-import com.example.onboarding.repository.DocumentRepository;
-import com.example.onboarding.entity.UserDocument;
 import com.example.onboarding.entity.Document;
+import com.example.onboarding.entity.Notification;
+import com.example.onboarding.entity.User;
+import com.example.onboarding.entity.UserDocument;
+import com.example.onboarding.repository.DocumentRepository;
+import com.example.onboarding.repository.UserDocumentRepository;
+import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.service.NotificationService;
+import com.example.onboarding.service.impl.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -32,6 +34,7 @@ public class UserDocumentController {
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
     private final FileStorageService fileStorageService;
+    private final NotificationService notificationService;
 
     /**
      * Get all documents for current user (with their upload status)
@@ -90,6 +93,11 @@ public class UserDocumentController {
         userDoc.setStatus(UserDocument.UploadStatus.UPLOADED);
 
         UserDocument saved = userDocumentRepository.save(userDoc);
+
+        // Notify admins about document upload
+        String message = user.getUsername() + " has uploaded document: " + document.getName();
+        notificationService.notifyAdmins(message, Notification.NotificationType.DOCUMENT_UPLOADED, "DOCUMENT", saved.getId());
+
         return UserDocumentDTO.fromUserDocument(saved);
     }
 

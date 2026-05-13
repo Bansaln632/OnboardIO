@@ -11,9 +11,9 @@ import com.example.onboarding.repository.OnboardingAssignmentHistoryRepository;
 import com.example.onboarding.repository.OnboardingRepository;
 import com.example.onboarding.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;

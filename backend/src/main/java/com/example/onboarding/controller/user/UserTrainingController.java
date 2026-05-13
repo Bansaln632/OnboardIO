@@ -2,10 +2,12 @@ package com.example.onboarding.controller.user;
 
 import com.example.onboarding.dto.DtoMapper;
 import com.example.onboarding.dto.TrainingDTO;
-import com.example.onboarding.entity.User;
+import com.example.onboarding.entity.Notification;
 import com.example.onboarding.entity.Training;
-import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.entity.User;
 import com.example.onboarding.repository.TrainingRepository;
+import com.example.onboarding.repository.UserRepository;
+import com.example.onboarding.service.NotificationService;
 import com.example.onboarding.util.OnboardingProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,7 @@ public class UserTrainingController {
     private final TrainingRepository trainingRepository;
     private final UserRepository userRepository;
     private final OnboardingProgressService progressService;
+    private final NotificationService notificationService;
 
     @GetMapping
     public List<TrainingDTO> getMyTrainings(Authentication authentication) {
@@ -33,10 +36,13 @@ public class UserTrainingController {
     }
 
     @PutMapping("/{trainingId}/complete")
-    public void completeTraining(@PathVariable Long trainingId) {
+    public void completeTraining(@PathVariable Long trainingId, Authentication authentication) {
 
         Training training = trainingRepository.findById(trainingId)
                 .orElseThrow(() -> new RuntimeException("Training not found"));
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         training.setCompleted(true);
         trainingRepository.save(training);
@@ -44,6 +50,10 @@ public class UserTrainingController {
         if (training.getEmployee() != null) {
             progressService.recalculateForEmployee(training.getEmployee().getId());
         }
+
+        // Notify admins about training completion
+        String message = user.getUsername() + " has completed the training: " + training.getName();
+        notificationService.notifyAdmins(message, Notification.NotificationType.TRAINING_COMPLETED, "TRAINING", trainingId);
     }
 
     @PutMapping("/{trainingId}/start")
@@ -81,5 +91,9 @@ public class UserTrainingController {
 
         // Recalculate progress
         progressService.recalculateForEmployee(user.getId());
+
+        // Notify admins about training completion
+        String message = user.getUsername() + " has completed the training: " + training.getName();
+        notificationService.notifyAdmins(message, Notification.NotificationType.TRAINING_COMPLETED, "TRAINING", trainingId);
     }
 }
